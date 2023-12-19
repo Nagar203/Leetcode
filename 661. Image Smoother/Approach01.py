@@ -9,13 +9,13 @@ class Solution:
         direction= [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 0], [0, 1], [1, -1], [1, 0], [1, 1]]
 
         for i in range(row):
-            for i in range(col):
-                int sum = 0
-                int count = 0
+            for j in range(col):
+                sum = 0
+                count = 0
 
                 for k in range(len(direction)):
-                    int ni = i + direction[d][0]
-                    int nj = j + direction[d][1]
+                    ni = i + direction[k][0]
+                    nj = j + direction[k][1]
 
                     if (ni >= 0 and ni < row and nj >= 0 and nj < col):
                         sum += img[ni][nj]
