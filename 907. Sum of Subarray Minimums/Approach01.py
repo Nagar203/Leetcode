@@ -35,8 +35,8 @@ class Solution:
         MOD = 1e9+7
         n = len(arr)
         
-        left_index = self.get_nsl(arr, n)
-        right_index = self.get_nsr(arr, n)
+        left_index = self.get_nsl(arr, n) # Next Smaller to left(nsl)
+        right_index = self.get_nsr(arr, n) # Next Smaller to Right(nsr)
         result  = 0
         
         for i in range(n):

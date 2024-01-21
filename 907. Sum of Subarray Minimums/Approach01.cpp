@@ -49,8 +49,8 @@ public:
         ll n = arr.size();
         vector<int> left_index, right_index;
         
-        left_index = get_nsl(arr, n);
-        right_index = get_nsr(arr, n);
+        left_index = get_nsl(arr, n);  // Next Smaller to left(nsl)
+        right_index = get_nsr(arr, n); // Next Smaller to Right(nsr)
         
         ll sum = 0;
         
