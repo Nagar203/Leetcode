@@ -4,7 +4,7 @@ class Solution:
     def countSubstrings(self, s: str) -> int:
         n = len(s)
         result = n
-        result_array = []
+        
         for i in range(n-1):
             for j in range(i+1,n):
                 sub_str = s[i:j+1]
