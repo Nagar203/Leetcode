@@ -5,7 +5,6 @@ class Solution:
         max_element = max(nums)
         i, j = 0, 0
         result, max_cnt = 0, 0
-        mp = {}
         n = len(nums)
 
         while(j<n):
