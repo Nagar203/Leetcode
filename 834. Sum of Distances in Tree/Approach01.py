@@ -1,32 +1,23 @@
-from collections import defaultdict
-
-
 class Solution:
-    def sumOfDistancesInTree(self, n: int, edges: List[List[int]]) -> List[int]:
-        result = [0] * n
-        count = [1] * n
-        tree = defaultdict(set)
+    def findRotateSteps(self, ring: str, key: str) -> int:
+        return self.dfs(ring, key, 0, {}) + len(key)
 
-        for edge in edges:
-            u, v = edge
-            tree[u].add(v)
-            tree[v].add(u)
+    def dfs(self, ring: str, key: str, index: int, mem: dict) -> int:
+        if index == len(key):
+            return 0
 
-        self.post_order(tree, 0, -1, count, result)
-        self.pre_order(tree, 0, -1, count, result)
+        hash_key = ring + str(index)
+        if hash_key in mem:
+            return mem[hash_key]
+
+        result = float("inf")
+
+        for i in range(len(ring)):
+            if ring[i] == key[index]:
+                min_rotates = min(i, len(ring) - i)
+                new_ring = ring[i:] + ring[:i]
+                remaining_rotates = self.dfs(new_ring, key, index + 1, mem.copy())
+                result = min(result, min_rotates + remaining_rotates)
+
+        mem[hash_key] = result
         return result
-
-    def post_order(self, tree, node, parent, count, result):
-        for child in tree[node]:
-            if child == parent:
-                continue
-            self.post_order(tree, child, node, count, result)
-            count[node] += count[child]
-            result[node] += result[child] + count[child]
-
-    def pre_order(self, tree, node, parent, count, result):
-        for child in tree[node]:
-            if child == parent:
-                continue
-            result[child] = result[node] - count[child] + (len(tree) - count[child])
-            self.pre_order(tree, child, node, count, result)
