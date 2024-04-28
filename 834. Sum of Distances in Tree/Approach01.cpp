@@ -1,39 +1,49 @@
-#include <string>
-#include <unordered_map>
+#include <iostream>
+#include <unordered_set>
+#include <vector>
 
 using namespace std;
 
-class Solution{
+class Solution {
 public:
-    int findRotateSteps(string ring, string key){
-        return dfs(ring, key, 0, {}) + key.length();
+    vector<int> sumOfDistancesInTree(int n, vector<vector<int>>& edges) {
+        vector<int> result(n);
+        vector<int> count(n, 1);
+        vector<unordered_set<int>> tree(n);
+
+        for (const vector<int>& edge : edges) {
+            const int u = edge[0];
+            const int v = edge[1];
+            tree[u].insert(v);
+            tree[v].insert(u);
+        }
+
+        post_order(tree, 0, -1, count, result);
+        pre_order(tree, 0, -1, count, result);
+        return result;
     }
 
 private:
-    int dfs(const string &ring, const string &key, int index,  unordered_map<string, int> &&mem){
-
-        if (index == key.length()){
-            return 0;
+    void post_order(const vector<unordered_set<int>>& tree, int node,
+                    int parent, vector<int>& count, vector<int>& result) {
+        for (const int child : tree[node]) {
+            if (child == parent)
+                continue;
+            post_order(tree, child, node, count, result);
+            count[node] += count[child];
+            result[node] += result[child] + count[child];
         }
+    }
 
-        const string hashKey = ring + to_string(index);
-        
-        if (const auto it = mem.find(hashKey); it != mem.cend()){
-            return it->second;
-        }
-
-        int result = INT_MAX;
-
-        for (size_t i = 0; i < ring.length(); ++i){
-            if (ring[i] == key[index]){
-
-                const int minRotates = min(i, ring.length() - i);
-                const string &newRing = ring.substr(i) + ring.substr(0, i);
-                const int remainingRotates = dfs(newRing, key, index + 1, move(mem));
-                result = min(result, minRotates + remainingRotates);
+    void pre_order(const vector<unordered_set<int>>& tree, int node, int parent,
+                   vector<int>& count, vector<int>& result) {
+        for (const int child : tree[node]) {
+            if (child == parent) {
+                continue;
             }
+            result[child] =
+                result[node] - count[child] + (tree.size() - count[child]);
+            pre_order(tree, child, node, count, result);
         }
-
-        return mem[hashKey] = result;
     }
 };
