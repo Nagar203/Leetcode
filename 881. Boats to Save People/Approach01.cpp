@@ -1,0 +1,20 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+class Solution {
+public:
+    int numRescueBoats(vector<int>& people, int limit) {
+        int result = 0;
+
+        ranges::sort(people);
+
+        for (int i = 0, j = people.size() - 1; i <= j; ++result) {
+            const int remain = limit - people[j--];
+            if (people[i] <= remain)
+                ++i;
+        }
+
+        return result;
+    }
+};
