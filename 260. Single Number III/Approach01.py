@@ -1,5 +1,6 @@
-from typing import *
-
+import functools
+import operator
+from typing import List
 
 class Solution:
     def singleNumber(self, nums: List[int]) -> List[int]:
