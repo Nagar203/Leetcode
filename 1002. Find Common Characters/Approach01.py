@@ -1,6 +1,4 @@
 from typing import *
-
-
 from typing import List
 
 class Solution:
