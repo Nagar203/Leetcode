@@ -1,5 +1,4 @@
 from typing import *
-import collections
 
 class Solution:
     def climbStairs(self, n: int) -> int:

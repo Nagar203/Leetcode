@@ -1,5 +1,4 @@
 from typing import *
-import collections
 
 class Solution:
     t = [-1]*46
