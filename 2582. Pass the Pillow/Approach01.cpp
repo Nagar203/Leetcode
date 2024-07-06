@@ -1,0 +1,20 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+class Solution {
+public:
+    int passThePillow(int num_people, int time_elapsed) {
+        // Calculate the effective time within one complete cycle of passing the pillow
+        int cycle_time = (num_people - 1) * 2;
+        int effective_time = time_elapsed % cycle_time;
+
+        // If the effective time is less than the number of people, the pillow is moving forward
+        if (effective_time < num_people) {
+            return 1 + effective_time;
+        }
+
+        // If the effective time is greater than or equal to the number of people, the pillow is moving backward
+        return num_people - (effective_time - (num_people - 1));
+    }
+};
