@@ -1,5 +1,3 @@
-from typing import *
-
 class Solution:
     def countOfAtoms(self, formula: str) -> str:
         index = 0
