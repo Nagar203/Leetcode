@@ -5,6 +5,7 @@ using namespace std;
 class Solution {
 public:
     double maxProbability(int numNodes, vector<vector<int>>& edges, vector<double>& successProbabilities, int startNode, int endNode) {
+        
         vector<vector<pair<int, double>>> graph(numNodes);
         priority_queue<pair<double, int>> maxHeap;
         maxHeap.emplace(1.0, startNode);
