@@ -1,41 +1,34 @@
-#include <bits/stdc++.h>
-
+#include <string>
+#include <algorithm>
 using namespace std;
 
 class Solution {
 public:
-    int maxScore(string s) {
-        int n = s.size();
-        int zero_cnt = 0;
-        int one_cnt = 0;
-        int cnt = 0;
-        int sum = 0;
-
-        while(s[cnt] != '\0'){
-            if(s[cnt] == '1'){
-                one_cnt++;
+    int maxScore(string binaryString) {
+        int stringLength = binaryString.length();
+        int totalOnesInString = 0;  // Total number of '1's in the string
+        
+        // Count the total number of '1's in the string
+        for (char character : binaryString) {
+            if (character == '1') {
+                ++totalOnesInString;
             }
-            cnt++;
         }
 
-        if(one_cnt == 0){
-            return (n-1);
-        }
-    
-        for(int i=0; i< n-1; i++){
-            if(s[i] == '0'){
-                zero_cnt++;
-            }
-            else{
-                one_cnt--;
-            }
-            
-            if(sum < (zero_cnt + one_cnt)){
-                sum = zero_cnt + one_cnt;
+        int leftZeroCount = 0, rightOneCount = totalOnesInString, maximumScore = 0;
+        
+        // Iterate up to the second last character to ensure both parts are non-empty
+        for (int index = 0; index < stringLength - 1; ++index) {
+            if (binaryString[index] == '0') {
+                ++leftZeroCount;
+            } else {
+                --rightOneCount;
             }
 
-            cnt++;
+            // Calculate the score and update the maximum score
+            maximumScore = max(maximumScore, leftZeroCount + rightOneCount);
         }
-        return sum;
+
+        return maximumScore;
     }
 };

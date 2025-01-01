@@ -1,17 +1,20 @@
-from typing import *
-
 class Solution:
-    def maxScore(self, s: str) -> int:
-        one_cnt = s.count('1')
-        zero_cnt = 0
-        result = -1
-
-        for i in range(len(s)-1):
-            if(s[i] == '0'):
-                zero_cnt += 1
+    def maxScore(self, binaryString: str) -> int:
+        stringLength = len(binaryString)
+        totalOnesInString = binaryString.count('1')  # Total number of '1's in the string
+        
+        leftZeroCount = 0
+        rightOneCount = totalOnesInString
+        maximumScore = 0
+        
+        # Iterate up to the second last character to ensure both parts are non-empty
+        for index in range(stringLength - 1):
+            if binaryString[index] == '0':
+                leftZeroCount += 1
             else:
-                one_cnt -= 1
-            if(result < (zero_cnt + one_cnt)):
-                result = zero_cnt + one_cnt
+                rightOneCount -= 1
 
-        return result
+            # Calculate the score and update the maximum score
+            maximumScore = max(maximumScore, leftZeroCount + rightOneCount)
+        
+        return maximumScore
