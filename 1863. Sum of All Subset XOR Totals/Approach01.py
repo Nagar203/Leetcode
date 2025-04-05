@@ -1,5 +1,3 @@
-from typing import *
-
 class Solution:
     def subsetXORSum(self, nums: List[int]) -> int:
         def solve(i: int, xors: int) -> int:
