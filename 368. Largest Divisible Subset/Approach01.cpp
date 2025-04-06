@@ -1,4 +1,3 @@
-#include <bits/stdc++.h>
 #include <vector>
 #include <algorithm>
 
@@ -7,34 +6,36 @@ using namespace std;
 class Solution {
 public:
     vector<int> largestDivisibleSubset(vector<int>& nums) {
-        int n = nums.size();
+        int totalNums = nums.size();
         sort(nums.begin(), nums.end());
-        
-        vector<int> t(n, 1);
-        vector<int> prev_index(n, -1);
+
+        vector<int> subsetLength(totalNums, 1);      // Length of divisible subset ending at each index
+        vector<int> previousIndex(totalNums, -1);    // To reconstruct the subset
         vector<int> result;
 
-        int last_index = 0;
-        int max_length = 1;
+        int maxSubsetEndIndex = 0;
+        int maxSubsetLength = 1;
 
-        for(int i = 1; i < n; i++) {
-            for(int j = 0; j < i; j++) {
-                if(nums[i] % nums[j] == 0) {
-                    if(t[i] < t[j] + 1) {
-                        t[i] = t[j] + 1;
-                        prev_index[i] = j;
-                    }
-                    if(t[i] > max_length) {
-                        max_length = t[i];
-                        last_index = i;
+        for (int i = 1; i < totalNums; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] % nums[j] == 0 && subsetLength[i] < subsetLength[j] + 1) {
+                    subsetLength[i] = subsetLength[j] + 1;
+                    previousIndex[i] = j;
+
+                    if (subsetLength[i] > maxSubsetLength) {
+                        maxSubsetLength = subsetLength[i];
+                        maxSubsetEndIndex = i;
                     }
                 }
             }
         }
-        while(last_index != -1) {
-            result.push_back(nums[last_index]);
-            last_index = prev_index[last_index];
+
+        // Reconstruct the subset
+        while (maxSubsetEndIndex != -1) {
+            result.push_back(nums[maxSubsetEndIndex]);
+            maxSubsetEndIndex = previousIndex[maxSubsetEndIndex];
         }
+
         return result;
     }
 };
