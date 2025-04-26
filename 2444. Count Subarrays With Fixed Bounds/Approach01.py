@@ -1,25 +1,21 @@
-from typing import *
-
 class Solution:
     def countSubarrays(self, nums, minK, maxK):
-        ans = 0
-        
-        minPosition = -1
-        maxPosition = -1
-        leftBound   = -1
-        
+        totalSubarrays = 0
+        lastMinIndex = -1
+        lastMaxIndex = -1
+        lastInvalidIndex = -1
+
         for i in range(len(nums)):
-            
             if nums[i] < minK or nums[i] > maxK:
-                leftBound = i
-            
+                lastInvalidIndex = i
             if nums[i] == minK:
-                minPosition = i
+                lastMinIndex = i
             if nums[i] == maxK:
-                maxPosition = i
-            
-            count = min(maxPosition, minPosition) - leftBound
-            
-            ans += 0 if count <= 0 else count
-        
-        return ans
+                lastMaxIndex = i
+
+            validSubarrayStart = min(lastMinIndex, lastMaxIndex)
+            subarrayCount = validSubarrayStart - lastInvalidIndex
+
+            totalSubarrays += subarrayCount if subarrayCount > 0 else 0
+
+        return totalSubarrays

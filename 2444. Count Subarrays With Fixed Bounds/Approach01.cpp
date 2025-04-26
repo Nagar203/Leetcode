@@ -1,32 +1,25 @@
-#include <bits/stdc++.h>
-
-using namespace std;
-
 class Solution {
 public:
     long long countSubarrays(vector<int>& nums, int minK, int maxK) {
-        long long ans = 0;
-        
-        int minPosition = -1;
-        int maxPosition = -1;
-        int leftBound   = -1;
-        
-        for(int i = 0; i < nums.size(); i++) {
-            
-            if(nums[i] < minK || nums[i] > maxK)
-                leftBound = i;
-            
-            if(nums[i] == minK)
-                minPosition = i;
-            if(nums[i] == maxK)
-                maxPosition = i;
-            
-            int count = min(maxPosition, minPosition) - leftBound;
-            
-            ans += (count <= 0) ? 0 : count;
-            
+        long long totalSubarrays = 0;
+        int lastMinIndex = -1;
+        int lastMaxIndex = -1;
+        int lastInvalidIndex = -1;
+
+        for (int i = 0; i < nums.size(); ++i) {
+            if (nums[i] < minK || nums[i] > maxK)
+                lastInvalidIndex = i;
+            if (nums[i] == minK)
+                lastMinIndex = i;
+            if (nums[i] == maxK)
+                lastMaxIndex = i;
+
+            int validSubarrayStart = min(lastMinIndex, lastMaxIndex);
+            int subarrayCount = validSubarrayStart - lastInvalidIndex;
+
+            totalSubarrays += (subarrayCount > 0) ? subarrayCount : 0;
         }
-        
-        return ans;
+
+        return totalSubarrays;
     }
 };
